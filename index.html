@@ -18,16 +18,23 @@
         }
 
         #container {
-            margin: 16px;
+            max-width: 320px;
+            margin: 0 auto;
         }
 
-        p {
+        h1 {
+            font-size: 21px;
+            text-align: center;
+        }
+
+        body {
             margin: 16px;
         }
 
         button {
             width: 100%;
             padding: 8px;
+            margin: 16px 0;
 
             color: #fff;
             background-color: #eb6100;
@@ -38,21 +45,38 @@
             color: #fff;
             background: #f56500;
         }
+
+        span {
+            font-weight: bold;
+        }
+
+        header{
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
     <div id="container">
-        <button onclick="window.location.reload();">チェック</button>
-        <p>Cookie上限数:<span id="max">---</span></p>
-        <p>上限を超えた際、消される件数:<span id="del">---</span></p>
-        <p>(動作仕様上500上限)</p>
+        <header>
+            <h1>Check Max Cookie Count.</h1>
+            <p>Check Cookie max 500.</p>
+            <p>expires.<span id="expires">---</span>sec</p>
+            <button onclick="window.location.reload();">Check</button>
+        </header>
+
+        <fieldset>
+            <legend>result</legend>
+            <p>Max:<span id="max">---</span></p>
+            <p>Deleted when overflow:<span id="del">---</span></p>
+        </fieldset>
     </div>
     <script>
         function CookieCount() {
             return document.cookie.split(";").length;
         }
         function CookieMaxCheck() {
+            let expires = 60000;
             let date = new Date();
             let key = 'T' + ('0' + date.getHours()).slice(-2) + ('0' + date.getMinutes()).slice(-2) + ('0' + date.getSeconds()).slice(-2);
             var cnt = CookieCount();
@@ -60,7 +84,7 @@
             for (i = 0; i < 500 && cnt > max; i++) {
                 max = cnt;
                 if (cnt >= 500) { break; }    //　上限達成
-                document.cookie = key + "_" + i + "=" + i + "; expires=" + (new Date((new Date()).valueOf() + 100000)).toUTCString();
+                document.cookie = key + "_" + i + "=" + i + "; expires=" + (new Date(date.valueOf() + expires)).toUTCString();
                 cnt = CookieCount();
             }
             let del = (max - cnt);
@@ -69,10 +93,12 @@
             }
             document.getElementById("max").innerText = max;
             document.getElementById("del").innerText = del;
+            document.getElementById("expires").innerText = expires / 1000;
         }
 
         let max = CookieMaxCheck();
         console.log(max);
     </script>
 </body>
+
 </html>
