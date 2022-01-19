@@ -2,7 +2,8 @@
     <head>
     </head>
     <body>
-        <p>Cookie上限数:<span id="max">---</span></p>
+        <button onclick="window.location.reload();">チェック</button>
+        <p>Cookie上限数(動作仕様上500上限):<span id="max">---</span></p>
         <p>上限を超えた際、消される件数:<span id="del">---</span></p>
         <script>
             function CookieCount(){
@@ -13,7 +14,7 @@
                 let key = 'T' + ('0' + date.getHours()).slice(-2) + ('0' + date.getMinutes()).slice(-2)  + ('0' + date.getSeconds()).slice(-2);
                 var cnt = CookieCount();
                 var max = -1;
-                for(i=0;i<500 && cnt > max;i++){
+                for(i=0;i<500 && cnt > max && cnt <= 500;i++){
                       max = cnt;
                       document.cookie = key+"_"+i+"="+i+"; expires=" + (new Date((new Date()).valueOf() + 100000)).toUTCString();
                       cnt = CookieCount();
