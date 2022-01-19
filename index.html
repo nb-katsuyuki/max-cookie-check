@@ -1,34 +1,78 @@
+<!DOCTYPE html>
 <html>
-    <head>
-    </head>
-    <body>
-        <button onclick="window.location.reload();">チェック</button>
-        <p>Cookie上限数(動作仕様上500上限):<span id="max">---</span></p>
-        <p>上限を超えた際、消される件数:<span id="del">---</span></p>
-        <script>
-            function CookieCount(){
-                return document.cookie.split(";").length;
-            }
-            function CookieMaxCheck(){
-                let date = new Date();
-                let key = 'T' + ('0' + date.getHours()).slice(-2) + ('0' + date.getMinutes()).slice(-2)  + ('0' + date.getSeconds()).slice(-2);
-                var cnt = CookieCount();
-                var max = -1;
-                for(i=0;i<500 && cnt > max && cnt <= 500;i++){
-                      max = cnt;
-                      document.cookie = key+"_"+i+"="+i+"; expires=" + (new Date((new Date()).valueOf() + 100000)).toUTCString();
-                      cnt = CookieCount();
-                }
-                let del = (max - cnt);
-                if(del < 0){
-                    del = "--- 500件以上対応可能";
-                }
-                document.getElementById("max").innerText = max;
-                document.getElementById("del").innerText = del;
-            }
 
-            let max = CookieMaxCheck();
-            console.log(max);
-        </script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,minimum-scale=1.0" name="viewport">
+    <title>Check Max Cookie Count</title>
+    <meta name="description" content="Check Max Cookie Count">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css">
+    <style>
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            /* font-size: 62.5%; */
+            -webkit-text-size-adjust: 100%;
+        }
+
+        #container {
+            margin: 16px;
+        }
+
+        p {
+            margin: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+
+            color: #fff;
+            background-color: #eb6100;
+            border-radius: 100vh;
+        }
+
+        button:hover {
+            color: #fff;
+            background: #f56500;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <button onclick="window.location.reload();">チェック</button>
+        <p>Cookie上限数:<span id="max">---</span></p>
+        <p>上限を超えた際、消される件数:<span id="del">---</span></p>
+        <p>(動作仕様上500上限)</p>
+    </div>
+    <script>
+        function CookieCount() {
+            return document.cookie.split(";").length;
+        }
+        function CookieMaxCheck() {
+            let date = new Date();
+            let key = 'T' + ('0' + date.getHours()).slice(-2) + ('0' + date.getMinutes()).slice(-2) + ('0' + date.getSeconds()).slice(-2);
+            var cnt = CookieCount();
+            var max = -1;
+            for (i = 0; i < 500 && cnt > max; i++) {
+                max = cnt;
+                if (cnt >= 500) { break; }    //　上限達成
+                document.cookie = key + "_" + i + "=" + i + "; expires=" + (new Date((new Date()).valueOf() + 100000)).toUTCString();
+                cnt = CookieCount();
+            }
+            let del = (max - cnt);
+            if (del < 0) {
+                del = "---";
+            }
+            document.getElementById("max").innerText = max;
+            document.getElementById("del").innerText = del;
+        }
+
+        let max = CookieMaxCheck();
+        console.log(max);
+    </script>
+</body>
 </html>
