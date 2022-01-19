@@ -20,6 +20,9 @@
                       cnt = CookieCount();
                 }
                 let del = (max - cnt);
+                if(del < 0){
+                    del = "--- 500件以上対応可能";
+                }
                 document.getElementById("max").innerText = max;
                 document.getElementById("del").innerText = del;
             }
