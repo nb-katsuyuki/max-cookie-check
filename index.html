@@ -1,0 +1,30 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <p>Cookie上限数:<span id="max">---</span></p>
+        <p>上限を超えた際、消される件数:<span id="del">---</span></p>
+        <script>
+            function CookieCount(){
+                return document.cookie.split(";").length;
+            }
+            function CookieMaxCheck(){
+                let date = new Date();
+                let key = 'T' + ('0' + date.getHours()).slice(-2) + ('0' + date.getMinutes()).slice(-2)  + ('0' + date.getSeconds()).slice(-2);
+                var cnt = CookieCount();
+                var max = -1;
+                for(i=0;i<500 && cnt > max;i++){
+                      max = cnt;
+                      document.cookie = key+"_"+i+"="+i+"; expires=" + (new Date((new Date()).valueOf() + 100000)).toUTCString();
+                      cnt = CookieCount();
+                }
+                let del = (max - cnt);
+                document.getElementById("max").innerText = max;
+                document.getElementById("del").innerText = del;
+            }
+
+            let max = CookieMaxCheck();
+            console.log(max);
+        </script>
+    </body>
+</html>
