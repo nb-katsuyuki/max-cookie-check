@@ -7,53 +7,8 @@
     <title>Check Max Cookie Count</title>
     <meta name="description" content="Check Max Cookie Count">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css">
-    <style>
-        html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
-            /* font-size: 62.5%; */
-            -webkit-text-size-adjust: 100%;
-        }
+    <link rel="stylesheet" href="./style.css">
 
-        #container {
-            max-width: 320px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 21px;
-            text-align: center;
-        }
-
-        body {
-            margin: 16px;
-        }
-
-        button {
-            width: 100%;
-            padding: 8px;
-            margin: 16px 0;
-
-            color: #fff;
-            background-color: #eb6100;
-            border-radius: 100vh;
-        }
-
-        button:hover {
-            color: #fff;
-            background: #f56500;
-        }
-
-        span {
-            font-weight: bold;
-        }
-
-        header {
-            text-align: center;
-        }
-    </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3YDTMSJZV"></script>
     <script>
@@ -79,6 +34,10 @@
             <p>Max:<span id="max">---</span></p>
             <p>Deleted when overflow:<span id="del">---</span></p>
         </fieldset>
+
+        <footer>
+            <a href="./about.html">About</a>
+        </footer>
     </div>
     <script>
         function CookieCount() {
